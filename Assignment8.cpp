@@ -7,13 +7,15 @@ using namespace std;
 #define int long long
 const int N = 1e4;
 
-int cost[N][N];
-int dist[N];
-int visited[N];
+int cost[N][N]; // Adjacency Matrix having weights
 
-void djikstra(int src, int v){
+void djikstra(int src, int v){ // Graph's vertex should start from 0
+    int dist[v];
+    int visited[v];
+    fill(dist, dist+v, inf);
+    fill(visited, visited+v, 0);
+
     dist[src] = 0;
-    
     int cur = src, mn = inf; 
 
     for(int iteration = 1; iteration <= v; iteration++){
@@ -41,7 +43,7 @@ void djikstra(int src, int v){
 }
 
 signed main(){
-    int v = 0, op = 0, op1 = 1, src = 0, dest = 0, weight = 0;
+    int v = 0, op = 0, op1 = 1, op2 = 0, src = 0, dest = 0, weight = 0;
 
     do{
         cout<<"\n******* Djikstra's Algorithm *******"<<nl<<nl;
@@ -64,22 +66,28 @@ signed main(){
                 }
 
                 while(op1!=0){
-                    cout<<"1. Add Edge"<<nl;
+                    cout<<"1. Add Edges"<<nl;
                     cout<<"2. Delete Edge"<<nl;
                     cout<<"0. Go Back To The Main Menu"<<nl;
                     cin>>op1;
 
                     switch(op1){
                         case 1:
-                            cout<<"Enter the source vertex : ";
-                            cin>>src;
-                            cout<<"Enter the destination vertex : ";
-                            cin>>dest;
-                            cout<<"Enter the length of the edge : ";
-                            cin>>weight;
+                            cout<<"Enter the number of edges you want to add : ";
+                            cin>>op2;
 
-                            cost[src][dest] = weight;
-                            cost[dest][src] = weight;
+                            for(int i = 0; i < op2; i++){
+                                cout<<"Enter the source vertex : ";
+                                cin>>src;
+                                cout<<"Enter the destination vertex : ";
+                                cin>>dest;
+                                cout<<"Enter the length of the edge : ";
+                                cin>>weight;
+
+                                cost[src][dest] = weight;
+                                cost[dest][src] = weight;
+
+                            }
                             break;
                         case 2:
                             cout<<"Enter the source vertex : ";
@@ -95,16 +103,13 @@ signed main(){
                             break;
                     }
                 }
+                op1 = 1;
                 break;
-            case 2:
-                fill(dist, dist+v, inf);
-                fill(visited, visited+v, 0);
-                
+            case 2:                
                 cout<<"Enter the vertex from which you want to calculate the shortest distance to other vertices : ";
                 cin>>src;
                 djikstra(src, v);
                 break;
-            
             default:
                 op = 0;
                 break;
