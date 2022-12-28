@@ -2,6 +2,7 @@
 
 using namespace std;
 #define nl "\n"
+#define ht "\t"
 
 class Students{
 	private:
@@ -19,10 +20,8 @@ class Students{
 		}
 
 		void getData(){
-			cout<<"Index : "<<ind<<nl;
-			cout<<"Roll No : "<<roll<<nl;
-			cout<<"Name : "<<name<<nl;
-			cout<<"SGPA : "<<sgpa<<nl;
+			cout<<"Index\tRoll\tName\t\tSGPA\n";
+			cout<<ind<<ht<<roll<<ht<<name<<ht<<ht<<sgpa<<nl;
 		}
 
 		void linearSearch(Students s[], int n, float sg){
@@ -98,25 +97,23 @@ class Students{
 		int partition (Students arr[], int low, int high){
 			int i = low;
 			int j = high;
-			float pivot = arr[high].sgpa;
+			float pivot = arr[low].sgpa;
 
 			while(i<j){
-				while(arr[i].sgpa <= pivot and i <= j){
+				while(arr[i].sgpa <= pivot){
 					i++;
 				}
-				while(arr[j].sgpa > pivot and i <= j){
+				while(arr[j].sgpa > pivot){
 					j--;
 				}
 				
 				if(i<j){
 					swap(arr[i], arr[j]);
 				}
-				else{
-					swap(arr[i], arr[high]);
-					return i;
-				}
 			}
-			return 0;
+
+			swap(arr[j], arr[low]);
+			return j;
 		}
 
 		void quickSort(Students arr[], int low, int high) { 
