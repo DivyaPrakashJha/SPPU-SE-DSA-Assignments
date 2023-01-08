@@ -4,7 +4,7 @@ using namespace std;
 
 #define nl "\n"
 #define inf INT_MAX
-const int N = 1e4;
+const int N = 1e3;
 
 int cost[N][N]; // Adjacency matrix having weights
 
@@ -116,12 +116,13 @@ int main(){
     int v = 0, op = 0, op1 = 1, op2 = 0, src = 0, dest = 0, weight = 0;
 
     do{
-        cout<<"\n******* Minimum Spanning Tree *******"<<nl<<nl;
+        cout<<"\n\n*********** Minimum Spanning Tree ***********"<<nl<<nl;
         cout<<"Choose The Desired Option:\n";
         cout<<"1. Add a New Graph\n";
         cout<<"2. MST using Prim's Algorithm\n";
         cout<<"3. MST using Kruskal's Algorithm\n";
         cout<<"*. Press any other numeric key to exit\n";
+        cout<<"*********************************************\n";
 
         cin>>op;
 
