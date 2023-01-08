@@ -17,98 +17,111 @@ class Node{
 };
 
 class ExpressionTree{
+    Node *root;
 
     public:
+        ExpressionTree(){
+            root = nullptr;
+        }
+
+        void setRoot(Node* r){
+            root = r;
+        }
+
+        Node* getRoot(){
+            return root;
+        }
+
         stack<Node*>s; // for non-recursive traversals (backtracking)
 
-        void inorderTraversalRecursive(Node* root){
-            if (root != nullptr){
-                inorderTraversalRecursive(root->left);
-                cout << root->data;
-                inorderTraversalRecursive(root->right);
+        void inorderTraversalRecursive(Node* root1){
+            if (root1 != nullptr){
+                inorderTraversalRecursive(root1->left);
+                cout << root1->data;
+                inorderTraversalRecursive(root1->right);
             }
             else return;
         }
 
-        void inorderTraversalNonRecursive(Node* root){
-            while(root!=nullptr){
-                s.push(root);
-                root = root->left;
+        void inorderTraversalNonRecursive(Node* root1){
+            while(root1!=nullptr){
+                s.push(root1);
+                root1 = root1->left;
             }
             while(!s.empty()){
-                root = s.top();
+                root1 = s.top();
                 s.pop();
-                cout<<root->data;
-                root = root->right;
+                cout<<root1->data;
+                root1 = root1->right;
 
-                while(root!=nullptr){
-                    s.push(root);
-                    root = root->left;
+                while(root1!=nullptr){
+                    s.push(root1);
+                    root1 = root1->left;
                 }
             }
         }
 
-        void preorderTraversalRecursive(Node *root){
-            if (root  != nullptr){
-                cout<<root->data;
-                preorderTraversalRecursive(root->left);
-                preorderTraversalRecursive(root->right);
+        void preorderTraversalRecursive(Node *root1){
+            if (root1  != nullptr){
+                cout<<root1->data;
+                preorderTraversalRecursive(root1->left);
+                preorderTraversalRecursive(root1->right);
             }
             else return;
         }
 
-        void preorderTraversalNonRecursive(Node *root){
-            while(root!=nullptr){
-                cout<<root->data;
-                s.push(root);
-                root = root->left;
+        void preorderTraversalNonRecursive(Node *root1){
+            while(root1!=nullptr){
+                cout<<root1->data;
+                s.push(root1);
+                root1 = root1->left;
             }
             while(!s.empty()){
-                root = s.top();
+                root1 = s.top();
                 s.pop();
-                root = root->right;
+                root1 = root1->right;
 
-                while(root!=nullptr){
-                    cout<<root->data;
-                    s.push(root);
-                    root = root->left;
+                while(root1!=nullptr){
+                    cout<<root1->data;
+                    s.push(root1);
+                    root1 = root1->left;
                 }
             }
         }
 
-        void postorderTraversalRecursive(Node *root){
-            if (root != nullptr){
-                postorderTraversalRecursive(root->left);
-                postorderTraversalRecursive(root->right);
-                cout<<root->data;
+        void postorderTraversalRecursive(Node *root1){
+            if (root1 != nullptr){
+                postorderTraversalRecursive(root1->left);
+                postorderTraversalRecursive(root1->right);
+                cout<<root1->data;
             }
             else return;
         }
 
         Node* pre;
         bool flag = 0;
-        void postorderTraversalNonRecursive(Node *root){
-            while(root!=nullptr){
-                s.push(root);
-                root = root->left;
+        void postorderTraversalNonRecursive(Node *root1){
+            while(root1!=nullptr){
+                s.push(root1);
+                root1 = root1->left;
             }
             while(!s.empty()){
-                root = s.top();
+                root1 = s.top();
                 flag = 0;
 
-                if (root->right == pre || (root->right == nullptr) ){
-                    cout<<root->data;
+                if (root1->right == pre || (root1->right == nullptr) ){
+                    cout<<root1->data;
                     s.pop();
-                    if(root->right == pre){
+                    if(root1->right == pre){
                         flag = 1;
                     }
-                    pre = root;
+                    pre = root1;
                 }
-                root = root->right;
+                root1 = root1->right;
 
-                while(root!=nullptr and flag == 0){
-                    s.push(root);
-                    root = root->left;
+                while(root1!=nullptr and flag == 0){
+                    s.push(root1);
+                    root1 = root1->left;
                 }
             }
         }
@@ -119,7 +132,6 @@ int main(){
     string postfix, prefix;
 
     ExpressionTree t;
-    Node *root;
 
     stack<Node*>st;
     
@@ -151,7 +163,7 @@ int main(){
                         st.push(newNode);
                     }
                 }
-                root = st.top();
+                t.setRoot(st.top());
                 st.pop();
                 break;
             case 2:
@@ -173,11 +185,11 @@ int main(){
                         st.push(newNode);
                     }
                 }
-                root = st.top();
+                t.setRoot(st.top());
                 st.pop();
                 break;
             case 3:
-                while(op1!=0){
+                do{
                     cout<<"\n\nChoose the desired traversal technique : "<<nl;
                     cout<<"1. Inorder Traversal(Recursive)"<<nl;
                     cout<<"2. Inorder Traversal(Non-Recursive)"<<nl;
@@ -190,28 +202,28 @@ int main(){
 
                     switch(op1){
                         case 1:
-                            t.inorderTraversalRecursive(root);
+                            t.inorderTraversalRecursive(t.getRoot());
                             break;
                         case 2:
-                            t.inorderTraversalNonRecursive(root);
+                            t.inorderTraversalNonRecursive(t.getRoot());
                             break;
                         case 3:
-                            t.preorderTraversalRecursive(root);
+                            t.preorderTraversalRecursive(t.getRoot());
                             break;
                         case 4:
-                            t.preorderTraversalNonRecursive(root);
+                            t.preorderTraversalNonRecursive(t.getRoot());
                             break;
                         case 5:
-                            t.postorderTraversalRecursive(root);
+                            t.postorderTraversalRecursive(t.getRoot());
                             break;
                         case 6:
-                            t.postorderTraversalNonRecursive(root);
+                            t.postorderTraversalNonRecursive(t.getRoot());
                             break;
                         default:
                             op1 = 0;
                             break;
                     }
-                }
+                }while(op1!=0);
                 break;
             default:
                 op = 0;
